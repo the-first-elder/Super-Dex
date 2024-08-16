@@ -1,5 +1,5 @@
 import { loadAndPreprocessData } from "./dataPreprocessing";
-import { predictOutcome, trainModel } from "./training";
+
 import { generateRandomMatch, MatchOdds } from "./oddsGeneration";
 import { calculateOdds } from "./src/calculateNewOdds";
 import { loadAndCreateTeamStats } from "./src/loadcsvforodd";
@@ -19,14 +19,14 @@ export async function userPickOdds(
 ): Promise<any> {
   const odds = calculateOdds(homeTeam, awayTeam);
 
-  console.log(`Match between ${homeTeam.teamName} and ${awayTeam.teamName}:`);
-  console.log(
-    `1. Home Win: ${odds.homeWin > 15 ? odds.homeWin / 10 : odds.homeWin}`
-  );
-  console.log(`2. Draw: ${odds.draw > 15 ? odds.draw / 10 : odds.draw}}`);
-  console.log(
-    `3. Away Win: ${odds.awayWin > 15 ? odds.homeWin / 10 : odds.awayWin}}`
-  );
+  //   console.log(`Match between ${homeTeam.teamName} and ${awayTeam.teamName}:`);
+  //   console.log(
+  //     `1. Home Win: ${odds.homeWin > 15 ? odds.homeWin / 10 : odds.homeWin}`
+  //   );
+  //   console.log(`2. Draw: ${odds.draw > 15 ? odds.draw / 10 : odds.draw}}`);
+  //   console.log(
+  //     `3. Away Win: ${odds.awayWin > 15 ? odds.homeWin / 10 : odds.awayWin}}`
+  //   );
 
   //   Assuming a function getUserSelection exists that fetches the user's pick.
   // const userSelection = await userSelection(); // Implement this as needed.

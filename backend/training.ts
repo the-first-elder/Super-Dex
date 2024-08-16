@@ -36,7 +36,7 @@ export async function trainModel(data: MatchData[]) {
     batchSize: 32,
     shuffle: true,
   });
-  console.log("model", model.summary(), "\n");
+  console.log("model", model.predict, "\n");
   return model;
 }
 
@@ -44,8 +44,10 @@ export async function predictOutcome(
   model: tf.LayersModel,
   matchFeatures: number[]
 ): Promise<string> {
-  const prediction = model.predict(tf.tensor2d([matchFeatures])) as tf.Tensor;
-  console.log("preditions, ", prediction);
+  const prediction = model.predict(
+    tf.tensor2d([matchFeatures], [1, 3])
+  ) as tf.Tensor;
+  console.log("preditions testing the ------->, ", prediction);
   const outcome = prediction.argMax(-1).dataSync()[0];
   console.log("outcome  data :", outcome.toFixed(2));
   switch (outcome) {
