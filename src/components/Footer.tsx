@@ -1,106 +1,98 @@
 import { FaTwitter, FaYoutube, FaLinkedin } from "react-icons/fa";
-const Footer = () => {
+
+// <div className="flex items-center space-x-4">
+//   <a
+//     href="https://twitter.com"
+//     className="text-gray-400 hover:text-white"
+//   >
+//     <FaTwitter size={24} />
+//   </a>
+//   <a
+//     href="https://youtube.com"
+//     className="text-gray-400 hover:text-white"
+//   >
+//     <FaYoutube size={24} />
+//   </a>
+//   <a
+//     href="https://linkedin.com"
+//     className="text-gray-400 hover:text-white"
+//   >
+//     <FaLinkedin size={24} />
+//   </a>
+//   {/* Add more icons as needed */}
+// </div>
+
+import React from 'react';
+
+const Footer: React.FC = () => {
   return (
-    <footer className="bg-black text-gray-400">
-      <div className="container mx-auto py-12 px-5">
-        <div className="flex flex-wrap justify-between space-y-10 md:space-y-0">
-          {/* Project header and description with more space */}
-          <div className="w-full lg:w-1/4 px-4 mb-6 lg:mb-0">
-            <h2 className="text-xl text-white font-semibold mb-4">Project</h2>
-            <p className="mt-2 text-gray-400">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Est, vel!
+    <footer className="flex flex-wrap gap-44 items-center mt-28 w-full max-md:mt-10 max-md:max-w-full">
+      <div className="flex flex-col w-1/3 max-md:max-w-full">
+        <div className="flex flex-col w-full max-md:max-w-full">
+          <div className="text-xl font-bold text-white">SuperDex</div>
+          <p className="mt-4 text-sm leading-9 text-neutral-400">
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Praesentium sapiente quam labore.
+          </p>
+        </div>
+        <div className="flex gap-8 justify-center items-center self-start mt-16 max-md:mt-10">
+          <a
+            href="https://twitter.com"
+            className="text-gray-200 hover:text-white"
+          >
+            <FaTwitter size={24} />
+          </a>
+          <a
+            href="https:youtube.com"
+            className="text-gray-200 hover:text-white"
+          >
+            <FaYoutube size={24} />
+          </a>
+          <a
+            href="https:linkedin.com"
+            className="text-gray-200 hover:text-white"
+          >
+            <FaLinkedin size={24} />
+          </a>
+        </div>
+      </div >
+      <div className="flex gap-20 items-start text-white">
+        <div className="flex flex-col">
+          <h3 className="text-base font-medium">Menu</h3>
+          <ul className="flex flex-col mt-10 text-sm text-gray-400">
+            <li><a href="#buy">Buy</a></li>
+            <li className="mt-8"><a href="#swap">Swap</a></li>
+            <li className="mt-8"><a href="#portfolio">Portfolio</a></li>
+          </ul>
+        </div>
+        <div className="flex flex-col">
+          <h3 className="text-base font-medium">Guide</h3>
+          <ul className="flex flex-col mt-10 text-sm text-gray-400">
+            <li><a href="#resources">Resources</a></li>
+            <li className="mt-8"><a href="#docs">Docs</a></li>
+            <li className="mt-8"><a href="#dolor">Dolor</a></li>
+          </ul>
+        </div>
+        <div className="flex flex-col">
+          <div className="flex flex-col">
+            <h3 className="text-base font-medium text-white">Subscribe to our newsletter</h3>
+            <p className="mt-6 text-sm leading-loose text-neutral-400">
+              Lorem ipsum dolor sit amet consectetur
             </p>
           </div>
-
-          {/* Navigation links with better spacing */}
-          <div className="w-1/2 lg:w-1/6 px-4">
-            <h3 className="text-white text-sm font-semibold mb-4">Menu</h3>
-            <ul className="list-none space-y-3">
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white">
-                  Buy
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white">
-                  Swap
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white">
-                  Portfolio
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Guide links with improved item spacing */}
-          <div className="w-1/2 lg:w-1/6 px-4">
-            <h3 className="text-white text-sm font-semibold mb-4">Guide</h3>
-            <ul className="list-none space-y-3">
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white">
-                  Resources
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white">
-                  Docs
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white">
-                  Dolor
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Newsletter Subscription with enhanced layout */}
-          <div className="w-full lg:w-1/4 px-4">
-            <h3 className="text-white text-sm font-semibold mb-4">
-              Subscribe to our newsletter
-            </h3>
-            <div className="mt-4">
-              <input
-                type="email"
-                className="p-2 w-full rounded-l bg-gray-700 focus:outline-none"
-                placeholder="Enter your email"
-              />
-              <button className="bg-blue-500 rounded-l hover:bg-blue-700 text-white px-4 rounded-r mt-3 ">
-                Subscribe
-              </button>
-            </div>
-          </div>
-
-          {/* Social Media Icons with better spacing */}
-          <div className="w-full lg:w-1/6 px-4 mt-6 lg:mt-0">
-            <h3 className="text-white text-sm font-semibold mb-4">Follow us</h3>
-            <div className="flex items-center space-x-4">
-              <a
-                href="https://twitter.com"
-                className="text-gray-400 hover:text-white"
-              >
-                <FaTwitter size={24} />
-              </a>
-              <a
-                href="https://youtube.com"
-                className="text-gray-400 hover:text-white"
-              >
-                <FaYoutube size={24} />
-              </a>
-              <a
-                href="https://linkedin.com"
-                className="text-gray-400 hover:text-white"
-              >
-                <FaLinkedin size={24} />
-              </a>
-              {/* Add more icons as needed */}
-            </div>
-          </div>
+          <form className="mt-10 w-fit rounded-lg border border-white border-solid">
+            <label htmlFor="newsletter-email" className="sr-only">Email address</label>
+            <input
+              type="email"
+              id="newsletter-email"
+              placeholder="Enter your email"
+              className="py-1.5 w-fit rounded-lg bg-transparent text-white px-4"
+              aria-label="Enter your email for newsletter subscription"
+            />
+          </form>
         </div>
       </div>
-    </footer>
+    </footer >
   );
 };
+
 export default Footer;
