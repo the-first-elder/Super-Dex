@@ -3,6 +3,7 @@ type MatchOdds = {
   draw: number;
   awayWin: number;
 };
+
 type TeamStats = {
   teamName: string;
   attackStrength: number; // Scoring ability
@@ -16,12 +17,15 @@ export function calculateOdds(
   homeTeam: TeamStats,
   awayTeam: TeamStats
 ): MatchOdds {
-  const baseProbability = 0.33;
+  // Adjust base probability dynamically based on team strength and form
+  const homeAdvantageBase = 0.4; // Home teams often have an advantage
+  const awayAdvantageBase = 0.3; // Away teams are often disadvantaged
+  const drawBase = 0.3; // Draws are generally less common but still possible
 
   const homeAttackVsAwayDefense =
-    homeTeam.attackStrength / awayTeam.defenseStrength;
+    homeTeam.attackStrength / Math.max(awayTeam.defenseStrength, 0.01);
   const awayAttackVsHomeDefense =
-    awayTeam.attackStrength / homeTeam.defenseStrength;
+    awayTeam.attackStrength / Math.max(homeTeam.defenseStrength, 0.01);
 
   const homeFormFactor = 1 + homeTeam.recentForm / 10;
   const awayFormFactor = 1 + awayTeam.recentForm / 10;
@@ -32,24 +36,34 @@ export function calculateOdds(
   const homeAdvantageFactor = homeTeam.homeAdvantage;
 
   const homeWinProbability =
-    baseProbability *
+    homeAdvantageBase *
     homeAttackVsAwayDefense *
     homeFormFactor *
     homeInjuryFactor *
     homeAdvantageFactor;
   const awayWinProbability =
-    baseProbability *
+    awayAdvantageBase *
     awayAttackVsHomeDefense *
     awayFormFactor *
     awayInjuryFactor;
-  const drawProbability = baseProbability;
+  const drawProbability = drawBase;
 
   const totalProbability =
     homeWinProbability + drawProbability + awayWinProbability;
 
-  const normalizedHomeWinProbability = homeWinProbability / totalProbability;
-  const normalizedDrawProbability = drawProbability / totalProbability;
-  const normalizedAwayWinProbability = awayWinProbability / totalProbability;
+  // Prevent division by zero
+  const normalizedHomeWinProbability = Math.max(
+    homeWinProbability / totalProbability,
+    0.01
+  );
+  const normalizedDrawProbability = Math.max(
+    drawProbability / totalProbability,
+    0.01
+  );
+  const normalizedAwayWinProbability = Math.max(
+    awayWinProbability / totalProbability,
+    0.01
+  );
 
   const homeWinOdds = 1 / normalizedHomeWinProbability;
   const drawOdds = 1 / normalizedDrawProbability;
