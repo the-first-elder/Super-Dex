@@ -3,10 +3,9 @@ import { generateRandomMatch } from "../utils/oddsGeneration";
 import { calculateOdds } from "../utils/calculateNewOdds";
 import { loadAndCreateTeamStats } from "../utils/loadcsvforodd";
 import { Request, Response } from "express";
-
-import CustomError from "../utils/CustomError";
 import path from "path";
 import { MatchOdds } from "../models/matchOdds";
+import CustomError from "../utils/customError";
 
 interface TeamStats {
   teamName: string;

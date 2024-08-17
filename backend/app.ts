@@ -41,7 +41,7 @@ const limiter = rateLimit({
 app.use(limiter);
 
 const port = process.env.PORT || 5005;
-app.use("/", oddsRoute);
+app.use("/v1", oddsRoute);
 
 app.listen(port, () => {
   console.log(`[Server]: server is running on http://localhost:${port}`);
