@@ -3,10 +3,9 @@ import { generateRandomMatch } from "../utils/oddsGeneration";
 import { calculateOdds } from "../utils/calculateNewOdds";
 import { loadAndCreateTeamStats } from "../utils/loadcsvforodd";
 import { Request, Response } from "express";
-
-import CustomError from "../utils/CustomError";
 import path from "path";
 import { MatchOdds } from "../models/matchOdds";
+import CustomError from "../utils/customError";
 
 interface TeamStats {
   teamName: string;
@@ -88,6 +87,18 @@ export async function generateOddsBatch(req: Request, res: Response) {
         result = "Draw";
       }
 
+      let homeScore: number;
+      let awayScore: number;
+
+      if (result === "Home Win") {
+        homeScore = Math.floor(Math.random() * 3) + 1; // Ensure home team score is at least 1
+        awayScore = Math.floor(Math.random() * homeScore); // Away score is less than home score
+      } else if (result === "Away Win") {
+        awayScore = Math.floor(Math.random() * 3) + 1; // Ensure away team score is at least 1
+        homeScore = Math.floor(Math.random() * awayScore); // Home score is less than away score
+      } else {
+        homeScore = awayScore = Math.floor(Math.random() * 3); // Both scores are the same for a draw
+      }
       const odds = {
         homeWin: formatOdds(calculateOdds(homeStats, awayStats).homeWin),
         draw: formatOdds(calculateOdds(homeStats, awayStats).draw),
@@ -99,6 +110,8 @@ export async function generateOddsBatch(req: Request, res: Response) {
         awayTeam,
         odds,
         result,
+        homeScore,
+        awayScore,
       });
 
       await matchOdds.save();
