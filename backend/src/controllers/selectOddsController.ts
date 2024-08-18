@@ -3,7 +3,7 @@ import { MatchOdds, IMatchOdds } from "../models/matchOdds";
 import { User } from "../models/userModel";
 import { ObjectId } from "mongoose";
 
-type Outcome = "homeWin" | "Draw" | "awayWin";
+type Outcome = "Home Win" | "Draw" | "Away Win";
 
 type MatchInput = {
   address: string;
@@ -11,7 +11,11 @@ type MatchInput = {
   awayTeam: string;
   selectedOutcome: Outcome;
 };
-
+interface Odds {
+  homeWin: number;
+  draw: number;
+  awayWin: number;
+}
 export async function placeBet(req: Request, res: Response) {
   try {
     const { address, homeTeam, awayTeam, selectedOutcome }: MatchInput =
@@ -49,7 +53,17 @@ export async function placeBet(req: Request, res: Response) {
         success: false,
       });
     }
-    const odds = match.odds[selectedOutcome as keyof typeof match.odds];
+
+    // Mapping selectedOutcome to the correct odds key
+    const oddsMapping: Record<Outcome, keyof Odds> = {
+      "Home Win": "homeWin",
+      Draw: "draw",
+      "Away Win": "awayWin",
+    };
+
+    const oddsKey = oddsMapping[selectedOutcome];
+    const odds = match.odds[oddsKey];
+
     if (!odds) {
       return res
         .status(400)
@@ -58,21 +72,36 @@ export async function placeBet(req: Request, res: Response) {
 
     const potentialPayout = odds * 10; // Assuming a base bet of 10
 
+    // Handle the bet result if the match has been played
+    let resultStatus: "Pending" | "Won" | "Lost" = "Pending";
+    if (match.result) {
+      if (match.result === selectedOutcome) {
+        resultStatus = "Won";
+      } else {
+        resultStatus = "Lost";
+      }
+    }
+
     user.bets.push({
-      matchId: match._id as ObjectId,
+      matchId,
       selectedOutcome,
       potentialPayout,
+      resultStatus,
     });
     user.totalBetsPlaced += potentialPayout; // Adding the potential payout
+
+    const allBetsWon = user.bets.every((bet) => bet.resultStatus === "Won");
+    user.wonBets = allBetsWon;
     await user.save();
 
     res.status(200).json({
       message: "Bet placed successfully",
       success: true,
       bet: {
-        matchId: match._id,
+        matchId,
         selectedOutcome,
         potentialPayout,
+        resultStatus,
       },
     });
   } catch (error) {

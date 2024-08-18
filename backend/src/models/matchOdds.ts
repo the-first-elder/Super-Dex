@@ -11,6 +11,8 @@ export interface IMatchOdds extends Document {
   awayTeam: string;
   odds: Odds;
   result?: string;
+  homeScore?: number;
+  awayScore?: number;
 }
 
 const MatchOddsSchema: Schema = new Schema({
@@ -22,6 +24,8 @@ const MatchOddsSchema: Schema = new Schema({
     awayWin: { type: Number, required: true },
   },
   result: { type: String, default: null },
+  homeScore: { type: Number, default: null },
+  awayScore: { type: Number, default: null },
 });
 
 export const MatchOdds = mongoose.model<IMatchOdds>(
